@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'lichess-dashboard.onrender.com'
+    'lichess-dashboard.vercel.app'
 ]
 
 
