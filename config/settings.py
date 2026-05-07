@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-3yq1f8bzn1=#hophk06hg(uepnswsm_83nadacxwvx%@#edzfb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'lichess-dashboard.onrender.com'
+]
 
 
 # Application definition
