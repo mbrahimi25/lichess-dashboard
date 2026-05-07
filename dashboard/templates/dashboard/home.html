@@ -1,0 +1,289 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lichess Dashboard</title>
+
+    <link rel="stylesheet" href="{% static 'dashboard/styles.css' %}">
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- HEADER -->
+    <header class="topbar">
+
+        <div>
+            <h1 class="site-title">Lichess Dashboard</h1>
+            <p class="site-subtitle">
+                Search any Lichess player and view performance statistics
+            </p>
+        </div>
+
+        <form method="POST" class="search-form">
+
+            {% csrf_token %}
+
+            <input
+                type="text"
+                name="username"
+                placeholder="Enter username"
+                value="{{ username }}"
+                required
+            >
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+    </header>
+
+    <!-- ERROR -->
+    {% if error %}
+        <div class="error-banner">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {% if user_found %}
+
+    <!-- PROFILE CARD -->
+    <section class="profile-card">
+
+        <div class="profile-top">
+
+            <div class="profile-left">
+
+                <div class="avatar">
+                    {% if raw_user.flair %}
+                        <img src={{flair_url}}>
+                    {% else %}
+                        {{ username|slice:":1" }}
+                    {% endif %}
+                </div>
+
+                <div class="profile-info">
+
+                    <div class="username-row">
+
+                        {% if raw_user.title %}
+                            <span class="title-badge">
+                                {{ raw_user.title }}
+                            </span>
+                        {% endif %}
+
+                        <h2 class="username">
+                            {{ username }}
+                        </h2>
+
+                        {% if raw_user.profile.flag %}
+                        <p class="country-flag">
+                            {{ raw_user.profile.flag }}
+                        </p>
+                        {% endif %}
+
+                    </div>
+
+                    {% if raw_user.profile.realName %}
+                        <p class="real-name">
+                            {{ raw_user.profile.realName }}
+                        </p>
+                    {% endif %}
+
+                    {% if created_date %}
+                        <p class="created-at">
+                            Lichess user since {{ created_date }}
+                        </p>
+                    {% endif %}
+
+                    {% if raw_user.disabled %}
+                        <p class="account-disabled">
+                            Account currently disabled.
+                        </p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- PROFILE STATS -->
+        <div class="profile-stats">
+
+            {% if raw_user.profile.fideRating %}
+            <div class="profile-stat">
+                <span>FIDE Rating</span>
+                <strong>{{ raw_user.profile.fideRating }}</strong>
+            </div>
+            {% endif %}
+
+            {% if raw_user.count %}
+
+            <div class="profile-stat">
+                <span>Wins / Draws / Losses</span>
+                <strong>{{ raw_user.count.win }} / {{ raw_user.count.draw }} / {{ raw_user.count.loss }}</strong>
+            </div>
+
+            {% endif %}
+
+            {% if raw_user.playTime.total %}
+            <div class="profile-stat">
+                <span>Time Played</span>
+                <strong>{{ play_time }}</strong>
+            </div>
+            {% endif %}
+
+            {% if last_seen %}
+            <div class="profile-stat">
+                <span>Last Seen</span>
+                <strong>{{ last_seen }}</strong>
+            </div>
+            {% endif %}
+
+        </div>
+
+        <!-- LINKS -->
+        {% if raw_user.streamer %}
+        <div class="profile-links">
+
+            {% if raw_user.streamer.twitch.channel %}
+                <a href="{{ raw_user.streamer.twitch.channel }}" target="_blank">
+                    Twitch
+                </a>
+            {% endif %}
+
+        </div>
+        {% endif %}
+
+    </section>
+
+    <!-- STATS -->
+    <section class="modes-grid">
+
+        <!-- RAPID -->
+        <div class="mode-card">
+
+            <div class="mode-header">
+                <h3>Rapid</h3>
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-box">
+                    <span>Rating</span>
+                    <strong>{{ rapid.rating }}</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Games</span>
+                    <strong>{{ rapid.games }}</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Deviation</span>
+                    <strong>{{ rapid.rd }}</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Progress</span>
+                    <strong>{{ rapid.prog }}</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- BLITZ -->
+        <div class="mode-card">
+
+            <div class="mode-header">
+                <h3>Blitz</h3>
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-box">
+                    <span>Rating</span>
+                    <strong>{{ blitz.rating }}</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Games</span>
+                    <strong>{{ blitz.games }}</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Deviation</span>
+                    <strong>{{ blitz.rd }}</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Progress</span>
+                    <strong>{{ blitz.prog }}</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- BULLET -->
+        <div class="mode-card">
+
+            <div class="mode-header">
+                <h3>Bullet</h3>
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-box">
+                    <span>Rating</span>
+                    <strong>{{ bullet.rating }}</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Games</span>
+                    <strong>{{ bullet.games }}</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Deviation</span>
+                    <strong>{{ bullet.rd }}</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Progress</span>
+                    <strong>{{ bullet.prog }}</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- RAW DATA -->
+    <section class="raw-data-card">
+
+        <div class="raw-header">
+            <h3>Raw API Data</h3>
+        </div>
+
+        <pre>{{ raw_user }}</pre>
+
+    </section>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

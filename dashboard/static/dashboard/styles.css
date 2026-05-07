@@ -1,0 +1,489 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    background-color: #0d1117;
+    color: #f1f5f9;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.dashboard-container {
+    max-width: 1500px;
+
+    margin: 0 auto;
+    padding: 40px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar {
+    background-color: #161b22;
+
+    border: 1px solid #2d333b;
+    border-radius: 20px;
+
+    padding: 28px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================
+   TITLES
+========================= */
+
+.site-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.site-subtitle {
+    margin-top: 8px;
+
+    color: #8b949e;
+}
+
+
+/* =========================
+   SEARCH FORM
+========================= */
+
+.search-form {
+    display: flex;
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+.search-form input {
+    width: 260px;
+
+    padding: 14px 16px;
+
+    background-color: #0d1117;
+
+    border: 1px solid #30363d;
+    border-radius: 12px;
+
+    color: white;
+    font-size: 1rem;
+
+    outline: none;
+}
+
+.search-form input:focus {
+    border-color: #58a6ff;
+}
+
+.search-form button {
+    padding: 14px 22px;
+
+    border: none;
+    border-radius: 12px;
+
+    background-color: #238636;
+
+    color: white;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.search-form button:hover {
+    opacity: 0.9;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.error-banner {
+    background-color: #2d1117;
+
+    border: 1px solid #f85149;
+
+    padding: 18px;
+
+    border-radius: 16px;
+
+    color: #ffb3b3;
+}
+
+
+/* =========================
+   PROFILE CARD
+========================= */
+
+.profile-card {
+    background-color: #161b22;
+
+    border: 1px solid #2d333b;
+    border-radius: 20px;
+
+    padding: 28px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+
+/* PROFILE TOP */
+
+.profile-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 24px;
+
+    flex-wrap: wrap;
+}
+
+
+/* PROFILE LEFT */
+
+.profile-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+
+/* AVATAR */
+
+.avatar {
+    width: 78px;
+    height: 78px;
+
+    border-radius: 50%;
+
+    background-color: #dec99a;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 2rem;
+    font-weight: 700;
+
+    flex-shrink: 0;
+}
+
+
+/* PROFILE INFO */
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+
+/* USERNAME */
+
+.username-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+.username {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+
+/* REAL NAME */
+
+.real-name  {
+    color: #c9d1d9;
+}
+
+/* CREATED AT */
+
+.created-at {
+    color: #c9d1d9;
+}
+
+.account-disabled {
+    color: #ff7272;
+}
+
+
+/* FLAG */
+
+.country-flag {
+    color: #8b949e;
+}
+
+
+/* TITLE BADGE */
+
+.title-badge {
+    background-color: #facc15;
+    color: black;
+
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+
+/* =========================
+   PROFILE STATS
+========================= */
+
+.profile-stats {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 18px;
+}
+
+
+/* PROFILE STAT CARD */
+
+.profile-stat {
+    background-color: #0d1117;
+
+    border: 1px solid #2d333b;
+    border-radius: 16px;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+/* LABEL */
+
+.profile-stat span {
+    color: #8b949e;
+
+    font-size: 0.95rem;
+}
+
+
+/* VALUE */
+
+.profile-stat strong {
+    font-size: 1.5rem;
+}
+
+
+/* =========================
+   LINKS
+========================= */
+
+.profile-links {
+    display: flex;
+    gap: 14px;
+
+    flex-wrap: wrap;
+}
+
+.profile-links a {
+    text-decoration: none;
+
+    background-color: #21262d;
+
+    color: white;
+
+    border: 1px solid #30363d;
+    border-radius: 12px;
+
+    padding: 10px 16px;
+
+    transition: 0.2s;
+}
+
+.profile-links a:hover {
+    background-color: #30363d;
+}
+
+
+/* =========================
+   MODES GRID
+========================= */
+
+.modes-grid {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+    gap: 24px;
+}
+
+
+/* =========================
+   MODE CARD
+========================= */
+
+.mode-card {
+    background-color: #161b22;
+
+    border: 1px solid #2d333b;
+    border-radius: 20px;
+
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/* MODE TITLE */
+
+.mode-header h3 {
+    font-size: 1.4rem;
+}
+
+
+/* =========================
+   STATS GRID
+========================= */
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 16px;
+}
+
+
+/* =========================
+   STAT BOX
+========================= */
+
+.stat-box {
+    background-color: #0d1117;
+
+    border: 1px solid #2d333b;
+    border-radius: 16px;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    min-height: 110px;
+}
+
+
+/* LABEL */
+
+.stat-box span {
+    color: #8b949e;
+}
+
+
+/* VALUE */
+
+.stat-box strong {
+    font-size: 1.7rem;
+}
+
+
+/* =========================
+   RAW DATA
+========================= */
+
+.raw-data-card {
+    background-color: #161b22;
+
+    border: 1px solid #2d333b;
+    border-radius: 20px;
+
+    padding: 24px;
+}
+
+.raw-header {
+    margin-bottom: 18px;
+}
+
+.raw-data-card pre {
+    overflow-x: auto;
+
+    white-space: pre-wrap;
+
+    font-size: 0.95rem;
+    line-height: 1.5;
+
+    color: #c9d1d9;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+    .dashboard-container {
+        padding: 20px;
+    }
+
+    .site-title {
+        font-size: 1.7rem;
+    }
+
+    .username {
+        font-size: 1.5rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-form input {
+        width: 100%;
+    }
+
+}
