@@ -27,8 +27,9 @@ SECRET_KEY = 'django-insecure-3yq1f8bzn1=#hophk06hg(uepnswsm_83nadacxwvx%@#edzfb
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'lichess-dashboard.onrender.com'
-    'lichess-dashboard.vercel.app'
+    'lichess-dashboard.onrender.com',
+    'lichess-dashboard.vercel.app',
+    ".vercel.app"
 ]
 
 
