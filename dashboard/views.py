@@ -1,32 +1,36 @@
 from django.shortcuts import render
-import berserk
+import requests
+from datetime import datetime
 
-client = berserk.Client()
+
+def parse_lichess_time(value):
+    """
+    Handles both ISO strings and UNIX timestamps (seconds or milliseconds).
+    """
+    if not value:
+        return None
+
+    # UNIX timestamp (int or float)
+    if isinstance(value, (int, float)):
+        # convert ms → s if needed
+        if value > 1e12:
+            value = value / 1000
+        return datetime.fromtimestamp(value)
+
+    # ISO string
+    if isinstance(value, str):
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+
+    return None
+
 
 def home(request):
     context = {
         "username": "",
 
-        "rapid": {
-            "rating": None,
-            "games": None,
-            "rd": None,
-            "prog": None,
-        },
-
-        "blitz": {
-            "rating": None,
-            "games": None,
-            "rd": None,
-            "prog": None,
-        },
-
-        "bullet": {
-            "rating": None,
-            "games": None,
-            "rd": None,
-            "prog": None,
-        },
+        "rapid": {"rating": None, "games": None, "rd": None, "prog": None},
+        "blitz": {"rating": None, "games": None, "rd": None, "prog": None},
+        "bullet": {"rating": None, "games": None, "rd": None, "prog": None},
 
         "user_found": False,
         "play_time": None,
@@ -41,7 +45,7 @@ def home(request):
         username = request.POST.get("username", "").strip()
         context["username"] = username
 
-        # ALWAYS reset before fetching new user
+        # reset
         context["rapid"] = {}
         context["blitz"] = {}
         context["bullet"] = {}
@@ -53,42 +57,63 @@ def home(request):
         context["flair_url"] = None
 
         try:
-            user = client.users.get_public_data(username)
+            url = f"https://lichess.org/api/user/{username}"
+            response = requests.get(url, timeout=10)
+
+            if response.status_code != 200:
+                raise Exception("User not found")
+
+            user = response.json()
             perfs = user.get("perfs", {})
 
+            # ratings data
             context["blitz"] = perfs.get("blitz", {})
             context["rapid"] = perfs.get("rapid", {})
             context["bullet"] = perfs.get("bullet", {})
 
             context["user_found"] = True
-
             context["raw_user"] = user
 
+            # -----------------------
+            # Play time formatting
+            # -----------------------
             play_time_seconds = user.get("playTime", {}).get("total")
-            if play_time_seconds:
+            if play_time_seconds is not None:
                 days = play_time_seconds // 86400
                 hours = (play_time_seconds % 86400) // 3600
                 minutes = (play_time_seconds % 3600) // 60
                 seconds = play_time_seconds % 60
                 context["play_time"] = f"{days}d {hours}h {minutes}m {seconds}s"
 
-            # Formats the play time of the user in a readable format to be displayed in the web app
-
-            flair_name = user.get("flair", {})
+            # -----------------------
+            # Flair
+            # -----------------------
+            flair_name = user.get("flair")
             if flair_name:
-                context["flair_url"] = "https://lichess1.org/assets/______4/flair/img/" + flair_name + ".webp"
-            # Sets the flair_url from the user's flair image, if they have one
+                context["flair_url"] = (
+                    "https://lichess1.org/assets/______4/flair/img/"
+                    + flair_name
+                    + ".webp"
+                )
 
+            # -----------------------
+            # Created / last seen
+            # -----------------------
             created_at = user.get("createdAt")
             seen_at = user.get("seenAt")
 
-            if created_at:
-                context["created_date"] = created_at.strftime("%B %d, %Y - %I:%M %p %Z")
+            created_dt = parse_lichess_time(created_at)
+            seen_dt = parse_lichess_time(seen_at)
 
-            if seen_at:
-                context["last_seen"] = seen_at.strftime("%B %d, %Y - %I:%M %p %Z")
+            if created_dt:
+                context["created_date"] = created_dt.strftime(
+                    "%B %d, %Y - %I:%M %p %Z"
+                )
 
-            # Formats the dates the user was last seen at, and the date of their account creation, into a string
+            if seen_dt:
+                context["last_seen"] = seen_dt.strftime(
+                    "%B %d, %Y - %I:%M %p %Z"
+                )
 
         except Exception as e:
             context["error"] = str(e)
