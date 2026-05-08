@@ -10,6 +10,21 @@
     <title>Lichess Dashboard</title>
 
     <link rel="stylesheet" href="{% static 'dashboard/styles.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'dashboard/favicon.ico' %}">
+
+    <script>
+
+        function loadGame(gameId) {
+            const iframe = document.getElementById("lichess-frame")
+            const placeholder = document.getElementById("iframe-placeholder")
+
+            placeholder.style.display = "none"
+            iframe.style.display = "block"
+
+            iframe.src = `https://lichess.org/embed/game/${gameId}?theme=auto&bg=auto`
+        }
+
+    </script>
 </head>
 
 <body>
@@ -56,7 +71,7 @@
     {% if user_found %}
 
     <!-- PROFILE CARD -->
-    <section class="profile-card">
+    <section class="big-card">
 
         <div class="profile-top">
 
@@ -270,8 +285,46 @@
 
     </section>
 
+    <!-- GAMES -->
+    <div class="big-card">
+
+        <h2>Recent Games</h2>
+
+        <div class = "games-and-analysis">
+            <div class="recent-games">
+                {% for game in recent_games %}
+
+                <div class="game-row" onclick="loadGame('{{ game.id }}')">
+
+                    <p>
+                        {{ game.white }}
+                        vs
+                        {{ game.black }}
+                    </p>
+
+                    <p>
+                        Winner: {{ game.winner }}
+                    </p>
+
+                    <p>
+                        {{ game.speed }}
+                    </p>
+
+                </div>
+
+                {% endfor %}
+            </div>
+
+            <div id="iframe-placeholder">Click on a game</div>
+
+            <iframe id="lichess-frame" src="" width="100%" height="600" frameborder="0" style="display: none;"></iframe>
+        </div>
+
+    
+    </div>
+    
     <!-- RAW DATA -->
-    <section class="raw-data-card">
+    <section class="raw-data-card" style="display: None;">
 
         <div class="raw-header">
             <h3>Raw API Data</h3>

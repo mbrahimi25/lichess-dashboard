@@ -146,10 +146,10 @@ body {
 
 
 /* =========================
-   PROFILE CARD
+   BIG CARD
 ========================= */
 
-.profile-card {
+.big-card {
     background-color: #161b22;
 
     border: 1px solid #2d333b;
@@ -428,6 +428,65 @@ body {
 
 .stat-box strong {
     font-size: 1.7rem;
+}
+
+/* =========================
+   GAME ROW
+========================= */
+
+.game-card {
+    background-color: #161b22;
+
+    border: 1px solid #2d333b;
+    border-radius: 20px;
+
+    padding: 28px;
+
+    display: flex;
+    flex-direction: row;
+    gap: 28px;
+}
+
+.games-and-analysis {
+    display: flex;
+    flex-direction: row;
+    gap: 28px;
+}
+
+.recent-games {
+    max-width: 200px;
+}
+
+.game-row {
+    background-color: #0d1117;
+
+    border: 1px solid #2d333b;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    min-height: 110px;
+
+    font-family: "Helvetica";
+}
+
+.game-row:hover {
+    background-color: #171e29;
+}
+
+#iframe-placeholder {
+    background-color: #0d1117;
+
+    border: 1px solid #2d333b;
+    border-radius: 20px;
+
+    padding: 28px;
+    width: stretch;
+
+    font-family: "Helvetica";
 }
 
 

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import requests
 from datetime import datetime
+import json
 
 
 def parse_lichess_time(value):
@@ -27,18 +28,20 @@ def parse_lichess_time(value):
 def home(request):
     context = {
         "username": "",
+        "raw_user": None,
+        "user_found": False,
+        "error": None,
 
         "rapid": {"rating": None, "games": None, "rd": None, "prog": None},
         "blitz": {"rating": None, "games": None, "rd": None, "prog": None},
         "bullet": {"rating": None, "games": None, "rd": None, "prog": None},
 
-        "user_found": False,
         "play_time": None,
         "created_date": None,
         "last_seen": None,
-        "error": None,
         "flair_url": None,
-        "raw_user": None,
+
+        "recent_games": None,
     }
 
     if request.method == "POST":
@@ -55,6 +58,7 @@ def home(request):
         context["created_date"] = None
         context["last_seen"] = None
         context["flair_url"] = None
+        context["recent_games"] = None
 
         try:
             url = f"https://lichess.org/api/user/{username}"
@@ -115,7 +119,66 @@ def home(request):
                     "%B %d, %Y - %I:%M %p %Z"
                 )
 
+            ###############
+            # -----------------------
+            # Recent games
+            # -----------------------
+
+            games_url = (
+                f"https://lichess.org/api/games/user/{username}"
+                "?max=5&pgnInJson=true"
+            )
+
+            headers = {
+                "Accept": "application/x-ndjson"
+            }
+
+            games_response = requests.get(
+                games_url,
+                headers=headers,
+                timeout=10
+            )
+
+            games = []
+
+            if games_response.status_code == 200:
+
+                lines = games_response.text.strip().split("\n")
+
+                for line in lines:
+
+                    if not line.strip():
+                        continue
+
+                    game = json.loads(line)
+
+                    players = game.get("players", {})
+
+                    white = players.get("white", {}).get("user", {}).get("name", "Anonymous")
+                    black = players.get("black", {}).get("user", {}).get("name", "Anonymous")
+
+                    winner = game.get("winner", "draw")
+
+                    status = game.get("status", "unknown")
+
+                    speed = game.get("speed", "unknown")
+
+                    game_id = game.get("id")
+
+                    games.append({
+                        "id": game_id,
+                        "white": white,
+                        "black": black,
+                        "winner": winner,
+                        "status": status,
+                        "speed": speed.capitalize(),
+                    })
+
+                    context["recent_games"] = games
+
+        ### SHOW ERROR
         except Exception as e:
             context["error"] = str(e)
 
     return render(request, "dashboard/home.html", context)
+    # Returns info to the HTML home page
