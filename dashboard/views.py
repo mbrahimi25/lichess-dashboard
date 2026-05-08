@@ -90,7 +90,7 @@ def home(request):
 
             # Formats the dates the user was last seen at, and the date of their account creation, into a string
 
-        except Exception:
-            context["error"] = "User not found"
+        except Exception as e:
+            context["error"] = str(e)
 
     return render(request, "dashboard/home.html", context)
