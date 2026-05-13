@@ -1,6 +1,7 @@
 # Lichess Dashboard
 
-A Django-based web application that displays and analyzes Lichess games, providing a structured dashboard for reviewing performance, game history, and key statistics.
+A Django-based web application that displays and analyzes Lichess games, providing a structured dashboard for reviewing performance, game history, and key statistics. <br/>
+Check it out [here.](https://lichess-dashboard.vercel.app/)
 
 ## Overview
 
@@ -30,4 +31,8 @@ A Django-based web application that displays and analyzes Lichess games, providi
 
 ### Data & API
 
-![Lichess](https://img.shields.io/badge/Lichess_API-000000?style=for-the-badge&logo=lichess&logoColor=white)
+![Lichess](https://img.shields.io/badge/Lichess_API-FFFFFF?style=for-the-badge&logo=lichess&logoColor=black)
+
+### Deployment
+
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
