@@ -126,7 +126,7 @@ def home(request):
 
             games_url = (
                 f"https://lichess.org/api/games/user/{username}"
-                "?max=5&pgnInJson=true"
+                "?max=5"
             )
 
             headers = {
@@ -169,7 +169,7 @@ def home(request):
                         "id": game_id,
                         "white": white,
                         "black": black,
-                        "winner": winner,
+                        "winner": winner.capitalize(),
                         "status": status,
                         "speed": speed.capitalize(),
                     })

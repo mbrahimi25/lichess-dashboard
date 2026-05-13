@@ -297,9 +297,9 @@
                 <div class="game-row" onclick="loadGame('{{ game.id }}')">
 
                     <p>
-                        {{ game.white }}
-                        vs
-                        {{ game.black }}
+                        {{ game.white }} as white <br>
+                        vs. <br>
+                        {{ game.black }} as black
                     </p>
 
                     <p>
@@ -307,7 +307,7 @@
                     </p>
 
                     <p>
-                        {{ game.speed }}
+                        Mode: {{ game.speed }}
                     </p>
 
                 </div>
@@ -324,13 +324,16 @@
     </div>
     
     <!-- RAW DATA -->
-    <section class="raw-data-card" style="display: None;">
+    <section class="raw-data-card" style="display: none;">
 
         <div class="raw-header">
             <h3>Raw API Data</h3>
         </div>
 
         <pre>{{ raw_user }}</pre>
+
+        <h3>Game Data</h3>
+        <pre>{{ recent_games }}</pre>
 
     </section>
 
